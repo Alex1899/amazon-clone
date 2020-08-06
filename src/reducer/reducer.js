@@ -1,13 +1,6 @@
 
 export const initialState = {
-    basket: [{
-        id:'123456',
-        title:'Very sick dumbell! Trust!!',
-        price: 150,
-        rating: 5,
-        image: 'https://sportecentral.com/wp-content/uploads/2020/06/5845062_sa.jpg'
-            
-    }],
+    basket: [],
     user: null,
 }
 
@@ -18,6 +11,11 @@ export const getBasketTotal = (basket) => (
 const reducer = (state, action) => {
     console.log(action);
     switch(action.type){
+        case 'SET_USER':
+            return {
+                ...state,
+                user: action.user
+            }
         case 'ADD_TO_BASKET':
             // ADD 
             return {
