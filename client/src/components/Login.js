@@ -1,32 +1,28 @@
 import React, {useState} from 'react';
 import '../styles/Login.css';
 import {Link, useHistory} from 'react-router-dom';
-import { auth } from '../firebase';
+import axios from 'axios';
 
 function Login() {
     const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const login = (e) => {
+    const loginUser_get = (e) => {
         e.preventDefault();
+        axios.get('http://localhost:9000/users', { email, password })
+        .then((result) => console.log(result))
+        .catch(err => console.log(err));
         
-        auth.signInWithEmailAndPassword(email, password)
-            .then((auth) => {
-                // redirect to home page
-                history.push('/');
-            })
-            .catch(e => alert(e.message));
+        
     }
 
-    const register = () => {
-        auth.createUserWithEmailAndPassword(email, password)
-            .then(auth => {
-                //created user
-                history.push('/');
-            })
-            .catch(e => alert(e.message));
-
+    const registerUser_post = () => {
+        console.log( JSON.stringify({ email, password }));
+        axios.post('http://localhost:9000/users', { email, password })
+         .then((result) => console.log(result))
+         .catch(err => console.log(err))
+        
     }
 
     return (
@@ -46,14 +42,14 @@ function Login() {
                     <input type="text" value={email} onChange={(e) => {setEmail(e.target.value)}}/>
                     <h5><small>Password</small></h5>
                     <input type="text" value={password} onChange={(e) => {setPassword(e.target.value)}}/>
-                    <button onClick={login} type='submit'><small>Sign in</small></button>
+                    <button onClick={loginUser_get} type='submit'><small>Sign in</small></button>
                 </form>
                 <p><small style={{fontSize: 10}}>By signing-in you agree to Amazon's <a href="">Conditions of Use & Sale...</a> Please see out Privacy Notice, out Cookies Notice and out interest-Based Ads Notice.</small></p>
                
             </div>
             <div className="login__newMember">
                     <p className='login__newMemberText'>New to Amazon?</p>
-                    <button onClick={register} type='submit'><small>Create Amazon Account</small></button>
+                    <button onClick={registerUser_post} type='submit'><small>Create Amazon Account</small></button>
             </div>
             
         </div>

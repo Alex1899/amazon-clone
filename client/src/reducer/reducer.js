@@ -25,8 +25,6 @@ const reducer = (state, action) => {
         case 'REMOVE_FROM_BASKET':
             // REMOVE
             let newBasket = [...state.basket];
-            console.log(action.id);
-            console.log(newBasket);
             let arr = newBasket.filter((obj) => obj.id !== action.id);
             console.log(arr);
             return {...state,
