@@ -30,7 +30,7 @@ var server = http.createServer(app);
 
 const dbURI = 'mongodb+srv://alex1899:akoako99@amazon-clone.lysyo.mongodb.net/amazonclonedb?retryWrites=true&w=majority';
 
-mongoose.connect(dbURI)
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
   .then(result => {
     console.log('connected with the database');
     server.listen(port);

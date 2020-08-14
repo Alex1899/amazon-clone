@@ -1,28 +1,24 @@
 import React, {useState} from 'react';
-import '../styles/Login.css';
+import '../../styles/Login.css';
 import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
+import { useStateValue } from '../../context/StateProvider';
 
 function Login() {
     const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [ {}, dispatch ] = useStateValue();
+  
 
     const loginUser_get = (e) => {
         e.preventDefault();
-        axios.get('http://localhost:9000/users', { email, password })
-        .then((result) => console.log(result))
+        axios.post('http://localhost:9000/users/login', { email, password })
+        .then((response) => {
+            dispatch({type: 'SET_USER', user: response.data});
+            history.push('/');
+        })
         .catch(err => console.log(err));
-        
-        
-    }
-
-    const registerUser_post = () => {
-        console.log( JSON.stringify({ email, password }));
-        axios.post('http://localhost:9000/users', { email, password })
-         .then((result) => console.log(result))
-         .catch(err => console.log(err))
-        
     }
 
     return (
@@ -48,8 +44,9 @@ function Login() {
                
             </div>
             <div className="login__newMember">
-                    <p className='login__newMemberText'>New to Amazon?</p>
-                    <button onClick={registerUser_post} type='submit'><small>Create Amazon Account</small></button>
+                <p className='login__newMemberText'>New to Amazon?</p>
+                <button onClick={e => history.push('/register')} type='submit'><small>Create Amazon Account</small></button>
+               
             </div>
             
         </div>

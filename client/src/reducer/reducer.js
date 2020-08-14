@@ -30,6 +30,13 @@ const reducer = (state, action) => {
             return {...state,
                 basket: arr,
             };
+        case 'LOGOUT_USER':
+            return {
+                ...state,
+                basket: [],
+                user: null
+            };
+            
         default:
             return state;
 

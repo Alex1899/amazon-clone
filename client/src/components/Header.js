@@ -9,7 +9,9 @@ import { useStateValue } from '../context/StateProvider';
 function Header() {
   const [{ basket, user }, dispatch ] = useStateValue();
 
-
+  const logout = () => {
+      dispatch({type: 'LOGOUT_USER'});
+  }
 
   return (
     <nav className="header">
@@ -26,8 +28,8 @@ function Header() {
         <div className="header__nav">
             <Link className='header__link' to={!user && '/login'}>
                 <div  className="header__option">
-                    <span className='header__optionLineone'>Hello {user?.email}</span>
-                    <span className='header__optionLineTwo'>{user ? 'Sign out': 'Sign in'} </span>
+                    <span className='header__optionLineone'>Hello {user?.displayName}</span>
+                    <span onClick={ user && logout } className='header__optionLineTwo'>{user ? 'Sign out': 'Sign in'} </span>
                 </div>
             </Link>
 

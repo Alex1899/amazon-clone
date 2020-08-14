@@ -3,10 +3,9 @@ import './styles/App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/Home';
-import Checkout from './components/Checkout';
-import Login from './components/Login';
-
-import { useStateValue } from './context/StateProvider';
+import Checkout from './components/checkout/Checkout';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 
 
 function App() {
@@ -15,16 +14,19 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route path='/checkout'>
+        <Route exact path='/'>
             <Header />
-            <Checkout />
+            <Home/>
           </Route>
           <Route path='/login'>
             <Login />
           </Route>
-          <Route path='/'>
+          <Route path='/register'>
+            <Register />
+          </Route>
+          <Route path='/checkout'>
             <Header />
-            <Home/>
+            <Checkout />
           </Route>
         </Switch>
       </div>
