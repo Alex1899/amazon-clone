@@ -4,10 +4,13 @@
  * Module dependencies.
  */
 
+ require('dotenv').config();
 var app = require('../app');
 var debug = require('debug')('server:server');
 var http = require('http');
 var mongoose = require('mongoose');
+
+
 
 
 /**
@@ -28,9 +31,9 @@ var server = http.createServer(app);
  * Connect to MongoDB.
  */
 
-const dbURI = 'mongodb+srv://alex1899:akoako99@amazon-clone.lysyo.mongodb.net/amazonclonedb?retryWrites=true&w=majority';
+const dbURI = '';
 
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+mongoose.connect(process.env.MONGODB_CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
   .then(result => {
     console.log('connected with the database');
     server.listen(port);
