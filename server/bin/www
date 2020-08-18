@@ -31,7 +31,6 @@ var server = http.createServer(app);
  * Connect to MongoDB.
  */
 
-const dbURI = '';
 
 mongoose.connect(process.env.MONGODB_CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
   .then(result => {
