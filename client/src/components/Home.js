@@ -1,64 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Product from './Product';
 import '../styles/Home.css';
 import uuid from 'uuid/v4';
+import axios from 'axios';
+
 
 function Home() {
+    const [catalog, setCatalog ] = useState([]);
+    
+    const fetchData = ()=> {
+        axios.get('http://localhost:9000/catalog/')
+            .then((result) => {
+                console.log(result);
+                setCatalog(result.data);
+            })
+            .catch(err => console.log(err))
+     };
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
     return (
         <div className='home'>
-            <img className='home__image' 
-            alt='home image' 
-            src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_FT_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB408004054_.jpg" />
-            <div className="home__row">
-                <Product 
-                    id={uuid()}
-                    title='Very sick dumbell! Trust!!'
-                    price={150}
-                    rating={5}
-                    image='https://sportecentral.com/wp-content/uploads/2020/06/5845062_sa.jpg' />
-            
-                <Product 
-                    id={uuid()}
-                    title='Very sick dumbell! Trust!!'
-                    price={50}
-                    rating={5}
-                    image='https://media.4rgos.it/i/Argos/6145206_R_Z001A?w=750&h=440&qlt=70 '/>
-                
+            {catalog != [] && (
+                <>
+                 <img className='home__image' 
+                 alt='home image' 
+                 src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_FT_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB408004054_.jpg" />
+                 <div className="home__row">
+                     {catalog.slice(0, 3).map(product =>(
+                         <Product 
+                            id={product._id}
+                            title={product.title}
+                            price={product.price}
+                            rating={product.rating}
+                            image={product.image}
+                         />
+                      ))} 
                  </div>
-            <div className="home__row">
-                <Product 
-                    id={uuid()}
-                    title='Very sick dumbell! Trust!!'
-                    price={300}
-                    rating={5}
-                    image='https://lh3.googleusercontent.com/proxy/tsPLS_JkyaS0XuVjrZn4c4uCEHZ0DuisuXJ0j21TVAdC-muxefJJfzxX_DC2SaR6wEmPqIR5O7mTHh6fkOoTsfKCWkgm8R5PNpaGfnSgtwOe0uWKY_asCJZOIn9R1i8YiCrz_g' />
-                    
-                <Product 
-                    id={uuid()}
-                    title='Very sick dumbell! Trust!!'
-                    price={250}
-                    rating={5}
-                    image='https://m.media-amazon.com/images/I/419Lyv24deL.jpg' />
-                <Product 
-                    id={uuid()}
-                    title='Very sick dumbell! Trust!!'
-                    price={30}
-                    rating={5}
-                    image='https://lh3.googleusercontent.com/proxy/9W05gyXwjJEyU0-C-EZqYlJE6w0ae7trZDwpM_-jRC0wCzw8ZTK2KYKdmQglHAxMDvGfQdteJhkjqCHyPPYF75WmpH7gM3qG_0jeDQJCCoIkLVv8qwTod2WiEP9wlCUA1dDgJ8Xu8QwMxA' />
-          
-            
-            </div>
-            <div className="home__row">
-                <Product 
-                    id={uuid()}
-                    title='Very sick dumbell! Trust!!'
-                    price={20}
-                    rating={5}
-                    image='https://m.media-amazon.com/images/I/41AJ8FyHzyL._SR500,500_.jpg' />
-
-            </div>
+                 <div className="home__row">
+                     {catalog.slice(3, 5).map(product =>(
+                         <Product 
+                            id={product._id}
+                            title={product.title}
+                            price={product.price}
+                            rating={product.rating}
+                            image={product.image}
+                         />
+                      ))} 
+                 </div>
+                 <div className="home__row">
+                     {catalog.slice(5, 6).map(product =>(
+                         <Product 
+                            id={product._id}
+                            title={product.title}
+                            price={product.price}
+                            rating={product.rating}
+                            image={product.image}
+                         />
+                      ))} 
+                 </div>
+                </>
+            )}
         </div>
-    )
+     )
 }
 
 export default Home;

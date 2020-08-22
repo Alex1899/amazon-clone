@@ -7,8 +7,8 @@ import { useStateValue } from '../context/StateProvider';
 
 
 function Header() {
-  const [{ basket, user }, dispatch ] = useStateValue();
-
+  const [{ basket, itemCount, user }, dispatch ] = useStateValue();
+  console.log('itemCount: ', itemCount);
   const logout = () => {
       dispatch({type: 'LOGOUT_USER'});
   }
@@ -50,7 +50,7 @@ function Header() {
             <Link className='header__link' to='/checkout'>
                 <div className="header__optionBasket">
                     <ShoppingBasketIcon />
-                    <span className='header__optionLineTwo header__basketCount'> {basket?.length} </span>
+                    <span className='header__optionLineTwo header__basketCount'> {itemCount} </span>
                 </div>
             </Link>
         </div>

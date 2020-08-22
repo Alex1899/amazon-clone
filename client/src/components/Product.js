@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Product.css';
 import { useStateValue } from '../context/StateProvider';
+import Button from '@material-ui/core/Button';
 
 function Product({id, title, image, price, rating}) {
     const [{ basket }, dispatch ] = useStateValue();
+    let [count, setCount] = useState(0);
 
     const addBasket = () => {
+        setCount(count++);
         dispatch({type: 'ADD_TO_BASKET', product: {
             id,
             title,
             image,
             price,
-            rating
+            rating,
+            count
         }})
     }
 
@@ -26,13 +30,13 @@ function Product({id, title, image, price, rating}) {
 
                 <div className='product__rating'>
                     {
-                        Array(rating).fill().map((_) => (<p>⭐</p>))
+                        Array(parseInt(rating)).fill().map((_) => (<p>⭐</p>))
                     }
 
                 </div>
             </div>
             <img className='product__image' src={image} />
-            <button onClick={addBasket}> Add to basket </button>
+           <Button size='small' onClick={addBasket}> Add to basket </Button>
         </div>
     )
 }

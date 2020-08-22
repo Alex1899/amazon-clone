@@ -8,6 +8,7 @@ import Subtotal from '../Subtotal';
 function Checkout() {
     const [{ basket }, dispatch] = useStateValue();
 
+
     return (
         <div className='checkout'>
             <div className="checkout__left">
@@ -15,6 +16,7 @@ function Checkout() {
                     src='https://www.macarta.com/wp/wp-content/uploads/2020/02/amazonadvertisinglogo.png'
                     alt='checkout page ad'
                 />
+               
                 {basket?.length === 0 ? (
                     <div>
                         <h2>Your Shopping Basket is empty.</h2>
@@ -23,6 +25,7 @@ function Checkout() {
                 ) : (
                     <div>
                         <h2 className='checkout__title' >You Shopping Basket</h2>
+                        {console.log('Basket: ',basket)}
                         {basket?.map((item) => (
                             <CheckoutProduct 
                                 id={item.id}
@@ -30,6 +33,7 @@ function Checkout() {
                                 image={item.image}
                                 price={item.price}
                                 rating={item.rating}
+                                count={item.count}
                             />
                         ))}
                     </div>

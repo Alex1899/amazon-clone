@@ -1,4 +1,5 @@
 var express = require('express');
+var bcrypt = require('bcrypt');
 var User = require('../model/user');
 
 var router = express.Router();
@@ -17,6 +18,11 @@ router.post('/login', async (req, res) =>{
   if (!user)
     return res.status(400).json({ msg: 'User not found with these credentials'});
    
+  const match = await bcrypt.compare(password, user.password);
+
+  if (!match)
+    return res.status(400).json({ msg: 'User password incorrect'});
+
   res.json({ displayName: user.displayName });
 });
 
@@ -39,7 +45,11 @@ router.post('/register', async (req, res) => {
   if (userExists)
     return res.status(400).json({ msg: 'User with this email already exists'});
 
-  const user = new User({ displayName, email, password});
+  // hash password
+  const salt = await bcrypt.genSalt();
+  const passwordHash = await bcrypt.hash(password, salt);
+
+  const user = new User({ displayName, email, password: passwordHash});
  
   let response = await user.save();
   if (response.error){
